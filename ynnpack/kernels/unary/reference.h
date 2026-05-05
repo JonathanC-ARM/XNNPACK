@@ -136,18 +136,33 @@ struct round : public unary_op_info {
   explicit round(const unary_params& = {}) {}
   float operator()(float x) const override { return std::nearbyint(x); }
   double operator()(double x) const override { return std::nearbyint(x); }
+
+  tolerance_spec tolerance(ynn_type type) const override {
+    return tolerance_spec{/*relative=*/0.0f,
+                          /*absolute=*/type_is_integral(type) ? 1.0f : 0.0f};
+  }
 };
 
 struct ceil : public unary_op_info {
   explicit ceil(const unary_params& = {}) {}
   float operator()(float x) const override { return std::ceil(x); }
   double operator()(double x) const override { return std::ceil(x); }
+
+  tolerance_spec tolerance(ynn_type type) const override {
+    return tolerance_spec{/*relative=*/0.0f,
+                          /*absolute=*/type_is_integral(type) ? 1.0f : 0.0f};
+  }
 };
 
 struct floor : public unary_op_info {
   explicit floor(const unary_params& = {}) {}
   float operator()(float x) const override { return std::floor(x); }
   double operator()(double x) const override { return std::floor(x); }
+
+  tolerance_spec tolerance(ynn_type type) const override {
+    return tolerance_spec{/*relative=*/0.0f,
+                          /*absolute=*/type_is_integral(type) ? 1.0f : 0.0f};
+  }
 };
 
 struct sigmoid : public unary_op_info {
